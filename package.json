@@ -19,6 +19,7 @@
     "webpack": "^3.3.0"
   },
   "dependencies": {
+    "encrypter": "^1.0.0",
     "request": "^2.81.0",
     "vlq": "^0.2.2"
   }

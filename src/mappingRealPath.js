@@ -2,13 +2,18 @@ var http = require('http');
 var https = require('https');
 var url = require('url')
 var vlq = require('vlq')
+var Encrypter = require('encrypter')
 /*
 * 根据error堆栈关系，mapping 真实堆栈关系
 * @param {Array} stacks
 */
-export async function getRealStack (stacks) {
+export async function getRealStack (stacks, params) {
   let result = []
   let setmap = Object.create(null)
+  let encrypter = null
+  if (params.mapEncrypt.trim()) {
+    encrypter = new Encrypter(params.mapEncrypt.trim())
+  }
   // 获取文件内容
   for (let i = 0; i < stacks.length; i++) {
     let stack = stacks[i]
@@ -19,11 +24,16 @@ export async function getRealStack (stacks) {
     }
     let content = setmap[stack.mapUrl]
     if (!content) {
+      // read content
       content = await getContent(stack.mapUrl)
       if (!content) {
         return {
           message: `${stack.mapUrl} is invalid`
         }
+      }
+      // decrypt content
+      if (encrypter) {
+        content = encrypter.decrypt(content)
       }
       content = JSON.parse(content)
       content = mappingSingleFile(content)
