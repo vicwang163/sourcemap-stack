@@ -26,14 +26,33 @@ export async function getRealStack (stacks, params) {
     if (!content) {
       // read content
       content = await getContent(stack.mapUrl)
+      // 如果map内容为空，我们则读取filepath
       if (!content) {
-        return {
-          message: `${stack.mapUrl} is invalid`
+        content = await getContent(stack.filepath)
+        // 如果原有js文件存在，则直接
+        if (content) {
+          result.push({
+            filepath: stack.filepath,
+            content,
+            row: stack.row,
+            column: stack.column
+          })
+          console.log(result)
+          continue
+        } else {
+          // 如果还是为空，则抛错
+          return {
+            message: `${stack.mapUrl} or ${stack.filepath} is invalid`
+          }
         }
       }
       // decrypt content
       if (encrypter) {
-        content = encrypter.decrypt(content)
+        let rt = null;
+        try {
+          rt = encrypter.decrypt(content)
+          content = rt
+        } catch (e) {}
       }
       content = JSON.parse(content)
       content = mappingSingleFile(content)
@@ -59,7 +78,7 @@ export async function getRealStack (stacks, params) {
 * @param {Number} column
 */
 function mapErrorPosition (content, row, column) {
-  let mapResult = content[row][column]
+  let mapResult = content[row] && content[row][column] || null
   if (!mapResult) {
     let columns = content[row]
     if (!columns) {
