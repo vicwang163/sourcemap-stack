@@ -5,7 +5,9 @@ var path = require('path')
 export function getStackByError (str) {
   let result = []
   str.replace(/\((.*?)\)/g, function (all, value) {
-    result.push(value)
+    if (/^http/.test(value)) {
+      result.push(value)
+    }
   })
   result = result.map((item) => {
     let arr = path.basename(item).split(':')

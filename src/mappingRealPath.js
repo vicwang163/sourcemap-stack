@@ -37,7 +37,6 @@ export async function getRealStack (stacks, params) {
             row: stack.row,
             column: stack.column
           })
-          console.log(result)
           continue
         } else {
           // 如果还是为空，则抛错
