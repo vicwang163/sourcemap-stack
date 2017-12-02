@@ -116,6 +116,9 @@ async function getContent (filepath) {
         resolve(null)
       }
     })
+    .on('error', (error) => {
+      resolve(null)
+    })
   })
 }
 
@@ -126,7 +129,8 @@ function parseUrl (url) {
     hostname: matches[2],
     port: matches[3],
     pathname: matches[4],
-    path: matches[4]
+    path: matches[4],
+    timeout: 5000
   }
 }
 
