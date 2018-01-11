@@ -4,7 +4,7 @@ var path = require('path')
 */
 export function getStackByError (str) {
   let result = []
-  str.replace(/\((.*?)\)/g, function (all, value) {
+  str.replace(/https?:\/\/[\w\d:\/\.\-]+/g, function (value) {
     if (/^http/.test(value)) {
       result.push(value)
     }

@@ -1,12 +1,13 @@
 {
   "name": "sourcemap-stack",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "map minified js code",
   "main": "lib/index.js",
   "scripts": {
     "webpack": "webpack --config webpack.conf.js",
     "dev": "webpack --config webpack.conf.js --watch",
-    "start": "npm run webpack"
+    "start": "npm run webpack",
+    "prepublish": "npm run start"
   },
   "author": "vic.wang",
   "license": "ISC",
