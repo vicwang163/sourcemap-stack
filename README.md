@@ -5,6 +5,7 @@
 -----|-----
 mapUrl | sourcemap 地址链接，如果不填，表示sourcemap地址跟实际js路径一样
 mapName | 参考webpack的地址格式，比如：[name].[hash].js.map
+mapEncrypt | 如果map文件放到跟js同目录下，一起发布到cdn上，处于安全考虑，可以使用对称性加密map文件,加密包使用[encrypte](https://cnpmjs.org/package/encrypter),如果没有加密，这项不填
 desc | js error 的堆栈信息
 
 ## API 
@@ -62,3 +63,7 @@ sourcemapStack.getMapPath(stacks, params)
 stacks = yield sourcemapStack.getRealStack(stacks)
 
 ```
+
+## 具体使用文章
+
+[https://qianduan.group/posts/59e5c3d0cf830d7057327c95](https://qianduan.group/posts/59e5c3d0cf830d7057327c95)
