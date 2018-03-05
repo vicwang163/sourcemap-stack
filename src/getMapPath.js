@@ -1,4 +1,5 @@
 var path = require('path')
+var url = require('url')
 
 /*
 * 根据map参数添加相应的map url
@@ -23,9 +24,10 @@ export function getMapPath (stacks, params) {
       mapName = mapName.replace(/\[hash\]/g, arr[1])
     }
     if (params.mapUrl) {
-      stack.mapUrl = params.mapUrl + '/' + mapName
-    } else {
-      stack.mapUrl = dirname + '/' + mapName
+      let urlObj = url.parse(dirname)
+      dirname = params.mapUrl + urlObj.pathname
+      dirname = dirname.replace(/\/$/, '')
     }
+    stack.mapUrl = dirname + '/' + mapName
   }
 }
