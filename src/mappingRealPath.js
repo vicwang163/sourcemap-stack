@@ -83,6 +83,7 @@ function mapErrorPosition (content, row, column) {
     if (!columns) {
       return null
     }
+    column = parseInt(column)
     // 进行修正
     for (let i = 1; i < 10; i++) {
       if (columns[column - i]) {
