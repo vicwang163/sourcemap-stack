@@ -14,15 +14,18 @@ export function getMapPath (stacks, params) {
       continue
     }
     let mapName = params.mapName
-    let basename = path.basename(stack.filepath)
-    let dirname = path.dirname(stack.filepath)
-    let arr = basename.split('.')
-    if (arr.length === 2) {
-      mapName = mapName.replace(/\[name\]/g, arr[0])
-    } else if (arr.length === 3) {
-      mapName = mapName.replace(/\[name\]/g, arr[0])
-      mapName = mapName.replace(/\[hash\]/g, arr[1])
-    }
+    // 精简逻辑
+    let basename = path.basename(stack.filepath,'.js');
+    let dirname = path.dirname(stack.filepath);
+    // var arr = basename.split('.');
+    // if (arr.length === 2) {
+    //   mapName = mapName.replace(/\[name\]/g, arr[0]);
+    // } else if (arr.length === 3) {
+    //   mapName = mapName.replace(/\[name\]/g, arr[0]);
+    //   mapName = mapName.replace(/\[hash\]/g, arr[1]);
+    // }
+    mapName = mapName.replace(/\[name\]/g, basename);
+
     if (params.mapUrl) {
       let urlObj = url.parse(dirname)
       dirname = params.mapUrl + urlObj.pathname
